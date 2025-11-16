@@ -17,6 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+
 define( 'SITECOMPASS_AI_VERSION', '1.0.0' );
 define( 'SITECOMPASS_AI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SITECOMPASS_AI_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

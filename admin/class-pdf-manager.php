@@ -43,17 +43,17 @@ class Sitecompass_Ai_PDF_Manager {
 	public function handle_pdf_upload() {
 		// Verify nonce.
 		if ( ! isset( $_POST['sitecompass_pdf_upload_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['sitecompass_pdf_upload_nonce'] ) ), 'sitecompass_pdf_upload' ) ) {
-			return __( 'Security check failed.', 'sitecompass-ai' );
+			return __( 'Security check failed.', 'sitecompass' );
 		}
 
 		// Check user capabilities.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			return __( 'You do not have permission to upload files.', 'sitecompass-ai' );
+			return __( 'You do not have permission to upload files.', 'sitecompass' );
 		}
 
 		// Check if files were uploaded.
 		if ( ! isset( $_FILES['pdf_files'] ) || empty( $_FILES['pdf_files']['name'][0] ) ) {
-			return __( 'No files selected.', 'sitecompass-ai' );
+			return __( 'No files selected.', 'sitecompass' );
 		}
 
 		global $wpdb;
@@ -62,7 +62,7 @@ class Sitecompass_Ai_PDF_Manager {
 		$openai_api_key = get_option( 'sitecompass_openai_api_key', '' );
 
 		if ( empty( $openai_api_key ) ) {
-			return __( 'OpenAI API key is not configured.', 'sitecompass-ai' );
+			return __( 'OpenAI API key is not configured.', 'sitecompass' );
 		}
 
 		require_once SITECOMPASS_AI_PLUGIN_DIR . 'includes/class-openai-assistant.php';
@@ -101,7 +101,7 @@ class Sitecompass_Ai_PDF_Manager {
 					} else {
 						// Delete local file if OpenAI upload failed.
 						wp_delete_file( $upload_path );
-						return __( 'Failed to upload file to OpenAI.', 'sitecompass-ai' );
+						return __( 'Failed to upload file to OpenAI.', 'sitecompass' );
 					}
 				}
 			}
@@ -119,12 +119,12 @@ class Sitecompass_Ai_PDF_Manager {
 	public function handle_pdf_deletion( $pdf_id ) {
 		// Verify nonce.
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete_pdf_' . $pdf_id ) ) {
-			return __( 'Security check failed.', 'sitecompass-ai' );
+			return __( 'Security check failed.', 'sitecompass' );
 		}
 
 		// Check user capabilities.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			return __( 'You do not have permission to delete files.', 'sitecompass-ai' );
+			return __( 'You do not have permission to delete files.', 'sitecompass' );
 		}
 
 		global $wpdb;
@@ -135,7 +135,7 @@ class Sitecompass_Ai_PDF_Manager {
 		$pdf_file = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM %i WHERE id = %d", $table_name, $pdf_id ), ARRAY_A );
 
 		if ( ! $pdf_file ) {
-			return __( 'PDF file not found.', 'sitecompass-ai' );
+			return __( 'PDF file not found.', 'sitecompass' );
 		}
 
 		// Delete from OpenAI if file ID exists.

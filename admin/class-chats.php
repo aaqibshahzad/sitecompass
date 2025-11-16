@@ -41,7 +41,7 @@ class Sitecompass_Ai_Chats {
 	public function render_chats_page() {
 		// Check user capabilities.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'sitecompass' ) );
 		}
 
 		// Check if viewing a single thread.
@@ -143,47 +143,47 @@ class Sitecompass_Ai_Chats {
 
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Chat History', 'sitecompass-ai' ); ?></h1>
+			<h1><?php esc_html_e( 'Chat History', 'sitecompass' ); ?></h1>
 
 			<!-- Search and Filter Form -->
 			<form method="get" action="">
 				<input type="hidden" name="page" value="sitecompass" />
 				<p class="search-box">
-					<label class="screen-reader-text" for="chat-search-input"><?php esc_html_e( 'Search Chats:', 'sitecompass-ai' ); ?></label>
-					<input type="search" id="chat-search-input" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="<?php esc_attr_e( 'Search by session ID, thread ID, or message...', 'sitecompass-ai' ); ?>" />
+					<label class="screen-reader-text" for="chat-search-input"><?php esc_html_e( 'Search Chats:', 'sitecompass' ); ?></label>
+					<input type="search" id="chat-search-input" name="s" value="<?php echo esc_attr( $search ); ?>" placeholder="<?php esc_attr_e( 'Search by session ID, thread ID, or message...', 'sitecompass' ); ?>" />
 				</p>
 				<p>
-					<label for="start_date"><?php esc_html_e( 'Start Date:', 'sitecompass-ai' ); ?></label>
+					<label for="start_date"><?php esc_html_e( 'Start Date:', 'sitecompass' ); ?></label>
 					<input type="date" id="start_date" name="start_date" value="<?php echo esc_attr( $start_date ); ?>" />
 					
-					<label for="end_date"><?php esc_html_e( 'End Date:', 'sitecompass-ai' ); ?></label>
+					<label for="end_date"><?php esc_html_e( 'End Date:', 'sitecompass' ); ?></label>
 					<input type="date" id="end_date" name="end_date" value="<?php echo esc_attr( $end_date ); ?>" />
 					
-					<?php submit_button( __( 'Filter', 'sitecompass-ai' ), 'secondary', 'filter', false ); ?>
-					<a href="?page=sitecompass" class="button"><?php esc_html_e( 'Reset', 'sitecompass-ai' ); ?></a>
+					<?php submit_button( __( 'Filter', 'sitecompass' ), 'secondary', 'filter', false ); ?>
+					<a href="?page=sitecompass" class="button"><?php esc_html_e( 'Reset', 'sitecompass' ); ?></a>
 				</p>
 			</form>
 
 			<!-- Export Button -->
 			<p>
 				<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'export_csv', 's' => $search, 'start_date' => $start_date, 'end_date' => $end_date ) ), 'export_csv_nonce' ) ); ?>" class="button button-primary">
-					<?php esc_html_e( 'Export to CSV', 'sitecompass-ai' ); ?>
+					<?php esc_html_e( 'Export to CSV', 'sitecompass' ); ?>
 				</a>
 			</p>
 
 			<?php if ( empty( $conversations ) ) : ?>
-				<p><?php esc_html_e( 'No conversations found.', 'sitecompass-ai' ); ?></p>
+				<p><?php esc_html_e( 'No conversations found.', 'sitecompass' ); ?></p>
 			<?php else : ?>
 				<!-- Conversations Table -->
 				<table class="wp-list-table widefat fixed striped">
 					<thead>
 						<tr>
-							<th><?php esc_html_e( 'Session ID', 'sitecompass-ai' ); ?></th>
-							<th><?php esc_html_e( 'Thread ID', 'sitecompass-ai' ); ?></th>
-							<th><?php esc_html_e( 'First Message', 'sitecompass-ai' ); ?></th>
-							<th><?php esc_html_e( 'Last Message', 'sitecompass-ai' ); ?></th>
-							<th><?php esc_html_e( 'Messages', 'sitecompass-ai' ); ?></th>
-							<th><?php esc_html_e( 'Actions', 'sitecompass-ai' ); ?></th>
+							<th><?php esc_html_e( 'Session ID', 'sitecompass' ); ?></th>
+							<th><?php esc_html_e( 'Thread ID', 'sitecompass' ); ?></th>
+							<th><?php esc_html_e( 'First Message', 'sitecompass' ); ?></th>
+							<th><?php esc_html_e( 'Last Message', 'sitecompass' ); ?></th>
+							<th><?php esc_html_e( 'Messages', 'sitecompass' ); ?></th>
+							<th><?php esc_html_e( 'Actions', 'sitecompass' ); ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -196,10 +196,10 @@ class Sitecompass_Ai_Chats {
 								<td><?php echo esc_html( $conversation->message_count ); ?></td>
 								<td>
 									<a href="<?php echo esc_url( add_query_arg( array( 'thread_id' => $conversation->thread_id ) ) ); ?>" class="button button-small">
-										<?php esc_html_e( 'View', 'sitecompass-ai' ); ?>
+										<?php esc_html_e( 'View', 'sitecompass' ); ?>
 									</a>
-									<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'delete', 'session_id' => $conversation->session_id ) ), 'delete_conversation_' . $conversation->session_id ) ); ?>" class="button button-small" onclick="return confirm('<?php esc_attr_e( 'Are you sure you want to delete this conversation?', 'sitecompass-ai' ); ?>');">
-										<?php esc_html_e( 'Delete', 'sitecompass-ai' ); ?>
+									<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'delete', 'session_id' => $conversation->session_id ) ), 'delete_conversation_' . $conversation->session_id ) ); ?>" class="button button-small" onclick="return confirm('<?php esc_attr_e( 'Are you sure you want to delete this conversation?', 'sitecompass' ); ?>');">
+										<?php esc_html_e( 'Delete', 'sitecompass' ); ?>
 									</a>
 								</td>
 							</tr>
@@ -216,8 +216,8 @@ class Sitecompass_Ai_Chats {
 								array(
 									'base'      => add_query_arg( 'paged', '%#%' ),
 									'format'    => '',
-									'prev_text' => __( '&laquo;', 'sitecompass-ai' ),
-									'next_text' => __( '&raquo;', 'sitecompass-ai' ),
+									'prev_text' => __( '&laquo;', 'sitecompass' ),
+									'next_text' => __( '&raquo;', 'sitecompass' ),
 									'total'     => $total_pages,
 									'current'   => $current_page,
 								)
@@ -240,13 +240,13 @@ class Sitecompass_Ai_Chats {
 
 		// Verify nonce if present.
 		if ( isset( $_GET['_wpnonce'] ) && ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'view_thread' ) ) {
-			wp_die( esc_html__( 'Security check failed.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'Security check failed.', 'sitecompass' ) );
 		}
 
 		$thread_id = isset( $_GET['thread_id'] ) ? sanitize_text_field( wp_unslash( $_GET['thread_id'] ) ) : '';
 
 		if ( empty( $thread_id ) ) {
-			wp_die( esc_html__( 'Invalid thread ID.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'Invalid thread ID.', 'sitecompass' ) );
 		}
 
 		// Handle CSV export for single thread.
@@ -267,33 +267,33 @@ class Sitecompass_Ai_Chats {
 		);
 
 		if ( empty( $messages ) ) {
-			wp_die( esc_html__( 'No messages found for this thread.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'No messages found for this thread.', 'sitecompass' ) );
 		}
 
 		$session_id = $messages[0]->session_id;
 
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Conversation Thread', 'sitecompass-ai' ); ?></h1>
+			<h1><?php esc_html_e( 'Conversation Thread', 'sitecompass' ); ?></h1>
 			
 			<p>
-				<a href="?page=sitecompass" class="button"><?php esc_html_e( '&larr; Back to Chat History', 'sitecompass-ai' ); ?></a>
+				<a href="?page=sitecompass" class="button"><?php esc_html_e( '&larr; Back to Chat History', 'sitecompass' ); ?></a>
 				<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'export_thread_csv', 'thread_id' => $thread_id ) ), 'export_thread_csv_' . $thread_id ) ); ?>" class="button button-primary">
-					<?php esc_html_e( 'Export Thread to CSV', 'sitecompass-ai' ); ?>
+					<?php esc_html_e( 'Export Thread to CSV', 'sitecompass' ); ?>
 				</a>
 			</p>
 
 			<div class="sitecompass-thread-info">
-				<p><strong><?php esc_html_e( 'Session ID:', 'sitecompass-ai' ); ?></strong> <?php echo esc_html( $session_id ); ?></p>
-				<p><strong><?php esc_html_e( 'Thread ID:', 'sitecompass-ai' ); ?></strong> <?php echo esc_html( $thread_id ); ?></p>
-				<p><strong><?php esc_html_e( 'Total Messages:', 'sitecompass-ai' ); ?></strong> <?php echo esc_html( count( $messages ) ); ?></p>
+				<p><strong><?php esc_html_e( 'Session ID:', 'sitecompass' ); ?></strong> <?php echo esc_html( $session_id ); ?></p>
+				<p><strong><?php esc_html_e( 'Thread ID:', 'sitecompass' ); ?></strong> <?php echo esc_html( $thread_id ); ?></p>
+				<p><strong><?php esc_html_e( 'Total Messages:', 'sitecompass' ); ?></strong> <?php echo esc_html( count( $messages ) ); ?></p>
 			</div>
 
 			<div class="sitecompass-thread-messages" style="background: #fff; padding: 20px; border: 1px solid #ccc; margin-top: 20px;">
 				<?php foreach ( $messages as $message ) : ?>
 					<div class="sitecompass-message" style="margin-bottom: 20px; padding: 15px; background: <?php echo esc_attr( 'user' === $message->user_type ? '#e3f2fd' : '#f5f5f5' ); ?>; border-radius: 5px;">
 						<div class="message-header" style="margin-bottom: 10px;">
-							<strong><?php echo 'user' === $message->user_type ? esc_html__( 'User', 'sitecompass-ai' ) : esc_html__( 'Assistant', 'sitecompass-ai' ); ?>:</strong>
+							<strong><?php echo 'user' === $message->user_type ? esc_html__( 'User', 'sitecompass' ) : esc_html__( 'Assistant', 'sitecompass' ); ?>:</strong>
 							<span style="color: #666; font-size: 0.9em; margin-left: 10px;"><?php echo esc_html( $message->created_at ); ?></span>
 						</div>
 						<div class="message-content">
@@ -312,7 +312,7 @@ class Sitecompass_Ai_Chats {
 	private function handle_csv_export() {
 		// Verify nonce.
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'export_csv_nonce' ) ) {
-			wp_die( esc_html__( 'Security check failed.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'Security check failed.', 'sitecompass' ) );
 		}
 
 		global $wpdb;
@@ -397,7 +397,7 @@ class Sitecompass_Ai_Chats {
 	private function handle_thread_csv_export( $thread_id ) {
 		// Verify nonce.
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'export_thread_csv_' . $thread_id ) ) {
-			wp_die( esc_html__( 'Security check failed.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'Security check failed.', 'sitecompass' ) );
 		}
 
 		global $wpdb;
@@ -413,7 +413,7 @@ class Sitecompass_Ai_Chats {
 		);
 
 		if ( empty( $messages ) ) {
-			wp_die( esc_html__( 'No messages found for this thread.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'No messages found for this thread.', 'sitecompass' ) );
 		}
 
 		// Set headers for CSV download.
@@ -462,7 +462,7 @@ class Sitecompass_Ai_Chats {
 
 		// Verify nonce.
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'delete_conversation_' . $session_id ) ) {
-			wp_die( esc_html__( 'Security check failed.', 'sitecompass-ai' ) );
+			wp_die( esc_html__( 'Security check failed.', 'sitecompass' ) );
 		}
 
 		global $wpdb;
@@ -479,14 +479,14 @@ class Sitecompass_Ai_Chats {
 			add_settings_error(
 				'sitecompass_messages',
 				'conversation_deleted',
-				__( 'Conversation deleted successfully.', 'sitecompass-ai' ),
+				__( 'Conversation deleted successfully.', 'sitecompass' ),
 				'success'
 			);
 		} else {
 			add_settings_error(
 				'sitecompass_messages',
 				'conversation_delete_failed',
-				__( 'Failed to delete conversation.', 'sitecompass-ai' ),
+				__( 'Failed to delete conversation.', 'sitecompass' ),
 				'error'
 			);
 		}

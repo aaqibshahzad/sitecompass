@@ -21,29 +21,31 @@ Thumbs.db
 /dist/
 /build/
 
-# === WordPress Plugin Specific ===
-# Ignore WordPress-generated files if your plugin exposes assets publicly
-public/*.min.*
-public/*.map
-
-# Ignore any uploaded/generated assets if applicable
-assets/generated/
-
 # === Tests ===
-/tests/output/
-/coverage/
+/tests/
+coverage/
 
-# === Security / Local Config ===
+# === Build artifacts inside assets ===
+/assets/generated/
+assets/*.min.*
+assets/*.map
+
+# === KEEP WordPress plugin icons ===
+!assets/*.png
+!assets/*.svg
+
+# === Security / Local env ===
 /.env
 .env.*
 *.local.php
 
 # === Logs & Reports ===
-/debug.log
+debug.log
 /security-audit/*
 SECURITY-AUDIT.md
 
 # === Zip packages (when exporting plugin) ===
 *.zip
 
-.kiro/*
+# === Custom ignore ===
+/.kiro/

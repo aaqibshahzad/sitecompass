@@ -1,0 +1,139 @@
+.sitecompass-d-none {
+  display: none;
+}
+
+.chat-button img {
+  width: 50px;
+}
+
+.close-chat {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-body {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 42vh;
+  scrollbar-width:thin;
+}
+
+.chat-footer {
+  position: fixed;
+  bottom: 0;
+  padding: 10px 30px 10px 10px;
+  width: -webkit-fill-available;
+}
+
+.chat-footer-textarea {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+}
+
+.chat-footer-textarea textarea {
+  flex: 1;
+  border: 1px solid rgb(216, 220, 222);
+  border-radius: 3px;
+  resize: none;
+  padding: 0.714286em 0.857143em;
+  min-height: 36px;
+  line-height: 1.28571;
+  font-size: 14px;
+}
+
+.chat-footer-textarea textarea:focus {
+  box-shadow: rgba(153, 153, 153, 0.4) 0px 0px 0px 0.214286rem !important;
+  border-color: rgb(104, 115, 125) !important;
+}
+
+.chat-footer-textarea textarea:focus-visible {
+  outline-offset: inherit;
+  outline: none;
+}
+
+.footer-into-text {
+  text-align: center;
+  font-size: 12px;
+  margin: 5px 0 5px 0;
+}
+
+.sitecompass-massage-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.send-button {
+  border: none;
+  cursor: pointer;
+}
+
+/*
+.custom-form {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+*/
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.chat-message {
+  margin: 5px;
+}
+
+.sitecompass-bubble {
+  text-align: left;
+  font: inherit;
+}
+.sitecompass-bot-message {
+  text-align: left;
+  font: inherit;
+  padding-bottom: 10px;
+}
+
+.sitecompass-bubble {
+  font-weight: bold;
+  color: #2f3941;
+  padding: 5px 10px;
+}
+
+.sitecompass-user-message {
+  text-align: right;
+  font: inherit;
+  padding-bottom: 10px;
+}
+
+.typing {
+  align-items: center;
+  display: flex;
+  height: 17px;
+}
+.typing .dot:nth-child(1) {
+  animation-delay: 200ms;
+}
+.typing .dot:nth-child(2) {
+  animation-delay: 300ms;
+}
+.typing .dot:nth-child(3) {
+  animation-delay: 400ms;
+}
+.typing .dot:last-child {
+  margin-right: 0;
+}
+#form-success-message {
+  color: green;
+  margin-bottom: 5px;
+}
+#form-error-message {
+  color: red;
+  margin-bottom: 5px;
+}

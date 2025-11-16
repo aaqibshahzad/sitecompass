@@ -1,0 +1,599 @@
+# Copyright (C) 2024 SiteCompass Team
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: SiteCompass 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sitecompass\n"
+"POT-Creation-Date: 2024-11-16 00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+msgid "Site Compass"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://sitecompass.ai"
+msgstr ""
+
+#. Description of the plugin
+msgid "A WordPress plugin that seamlessly integrates OpenAI's advanced language models into your website, enabling interactive chatbots, virtual assistants, and automated content support. Upload custom PDF documents to create a knowledge base, and let the AI assistant answer visitor questions based on your content."
+msgstr ""
+
+#. Author of the plugin
+msgid "Site Compass Team"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://sitecompass.ai"
+msgstr ""
+
+#: admin/class-admin.php
+msgid "SiteCompass AI: Please configure your OpenAI API key in the settings to enable the chatbot."
+msgstr ""
+
+#: admin/class-admin.php
+msgid "SiteCompass AI: Your OpenAI API key appears to be invalid. Please check your settings."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Chat History"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Search Chats:"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Search by session ID, thread ID, or message..."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Start Date:"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "End Date:"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Filter"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Reset"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Export to CSV"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "No conversations found."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Session ID"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Thread ID"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "First Message"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Last Message"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Messages"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Actions"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "View"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Delete"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Are you sure you want to delete this conversation?"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "&laquo;"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "&raquo;"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Security check failed."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Invalid thread ID."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "No messages found for this thread."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Conversation Thread"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "&larr; Back to Chat History"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Export Thread to CSV"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Session ID:"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Thread ID:"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Total Messages:"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "User"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Assistant"
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Conversation deleted successfully."
+msgstr ""
+
+#: admin/class-chats.php
+msgid "Failed to delete conversation."
+msgstr ""
+
+#: admin/class-pdf-manager.php
+msgid "You do not have permission to upload files."
+msgstr ""
+
+#: admin/class-pdf-manager.php
+msgid "No files selected."
+msgstr ""
+
+#: admin/class-pdf-manager.php
+msgid "OpenAI API key is not configured."
+msgstr ""
+
+#: admin/class-pdf-manager.php
+msgid "Failed to upload file to OpenAI."
+msgstr ""
+
+#: admin/class-pdf-manager.php
+msgid "You do not have permission to delete files."
+msgstr ""
+
+#: admin/class-pdf-manager.php
+msgid "PDF file not found."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "SiteCompass"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Chats"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Settings"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "SiteCompass Settings"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "General"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "PDFs"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Appearance"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Avatars"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "General Settings"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "OpenAI API Key"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Enter your OpenAI API key to enable the chatbot."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "GPT Model"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Select the OpenAI model to use for the chatbot."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Bot Name"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "The name displayed for the chatbot."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Instructions"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "System instructions for the AI assistant."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Prompt Placeholder"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Placeholder text for the message input field."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Initial Greeting"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Greeting message for first-time visitors."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Subsequent Greeting"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Greeting message for returning visitors."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Show User Form"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Yes"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "No"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Display a form to collect user information before chat."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Save Settings"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "PDF uploaded successfully."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "PDF deleted successfully."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "PDF Management"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Please configure your OpenAI API key in the General settings before uploading PDFs."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Add Another PDF"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Upload PDFs"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Uploaded PDFs"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "PDF Name"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "OpenAI File ID"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Upload Date"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Action"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Are you sure you want to delete this PDF?"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "No PDFs uploaded yet."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Default settings restored."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Appearance Settings"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Chatbot Button Background Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Chatbot Background Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Header Background Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Header Text Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Text Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "User Text Background Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Bot Text Background Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Greeting Text Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Subsequent Greeting Background Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Subsequent Greeting Text Color"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Chatbot Width Wide"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Chatbot Width Narrow"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Chatbot Width Setting"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Narrow"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Wide"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Restore Defaults"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Select \"Yes\" and save to restore all appearance settings to defaults."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Custom CSS"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Add custom CSS to further customize the chatbot appearance."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Avatar Settings"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Choose an avatar that best represents you and your brand or link to your own avatar by adding a Custom Avatar URL (recommended 60x60px)."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "It's ok if you don't want an Avatar. Just select the 'None' option among the Avatar Icon Options below."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Be sure to remove the Custom Avatar URL if you want to select \"None\" or one from the set below."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "You can change your avatar at any time."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Don't forget to click 'Save Settings' to save your changes."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Avatar Greeting"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Short greeting text displayed with the avatar."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Custom Avatar URL (60x60px)"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Enter a URL to use a custom avatar image. Leave empty to use the icon selection below."
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Avatar Icon Options"
+msgstr ""
+
+#: admin/class-settings.php
+msgid "Select your icon by clicking on an image to select it. Don't forget to click 'Save Settings'."
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Chat Avatar"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Name:"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Email:"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Phone:"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Submit"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Enter"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Powered by SiteCompass"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Hi there! 👋"
+msgstr ""
+
+#: public/class-chatbox.php
+msgid "Enter your question..."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Security verification failed."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Message cannot be empty."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Invalid session."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "OpenAI API key not configured."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Assistant not configured."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Failed to create conversation thread."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Failed to send message to assistant."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Failed to run assistant."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Failed to retrieve run status."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Assistant run failed."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Assistant response timeout."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Failed to retrieve assistant response."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Please provide at least one piece of information."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Please provide a valid email address."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "Failed to save user information."
+msgstr ""
+
+#: public/class-message-handler.php
+msgid "User information saved successfully."
+msgstr ""

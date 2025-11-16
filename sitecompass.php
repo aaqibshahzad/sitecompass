@@ -46,13 +46,6 @@ register_deactivation_hook( __FILE__, 'deactivate_sitecompass_ai' );
 require SITECOMPASS_AI_PLUGIN_DIR . 'includes/class-plugin.php';
 
 /**
- * Load test runner in admin (for development/testing).
- */
-if ( is_admin() ) {
-	require_once SITECOMPASS_AI_PLUGIN_DIR . 'tests/run-all-tests.php';
-}
-
-/**
  * Run the plugin.
  */
 function run_sitecompass_ai() {

@@ -17,6 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+
 define( 'SITECOMPASS_AI_VERSION', '1.0.0' );
 define( 'SITECOMPASS_AI_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SITECOMPASS_AI_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -44,13 +45,6 @@ register_deactivation_hook( __FILE__, 'deactivate_sitecompass_ai' );
  * Load the main plugin class.
  */
 require SITECOMPASS_AI_PLUGIN_DIR . 'includes/class-plugin.php';
-
-/**
- * Load test runner in admin (for development/testing).
- */
-if ( is_admin() ) {
-	require_once SITECOMPASS_AI_PLUGIN_DIR . 'tests/run-all-tests.php';
-}
 
 /**
  * Run the plugin.

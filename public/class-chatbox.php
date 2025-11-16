@@ -170,7 +170,7 @@ class Sitecompass_Ai_Chatbox {
 		$avatar_url = $this->get_avatar_url( $avatar );
 		?>
 		<button class="sitecompass-chat-button" id="sitecompass-open-chat">
-			<img src="<?php echo esc_url( $avatar_url ); ?>" alt="<?php esc_attr_e( 'Chat Avatar', 'sitecompass-ai' ); ?>">
+			<img src="<?php echo esc_url( $avatar_url ); ?>" alt="<?php esc_attr_e( 'Chat Avatar', 'sitecompass' ); ?>">
 			<?php if ( ! empty( $initial_greeting ) ) : ?>
 				<div class="sitecompass-initial-greeting">
 					<?php echo esc_html( $initial_greeting ); ?>
@@ -230,22 +230,22 @@ class Sitecompass_Ai_Chatbox {
 				<div id="sitecompass-form-success-message"></div>
 				
 				<label for="sitecompass-user-name" class="sitecompass-form-label">
-					<?php esc_html_e( 'Name:', 'sitecompass-ai' ); ?>
+					<?php esc_html_e( 'Name:', 'sitecompass' ); ?>
 				</label>
 				<input type="text" id="sitecompass-user-name" name="name" class="sitecompass-form-input" required>
 				
 				<label for="sitecompass-user-email" class="sitecompass-form-label">
-					<?php esc_html_e( 'Email:', 'sitecompass-ai' ); ?>
+					<?php esc_html_e( 'Email:', 'sitecompass' ); ?>
 				</label>
 				<input type="email" id="sitecompass-user-email" name="email" class="sitecompass-form-input" required>
 				
 				<label for="sitecompass-user-phone" class="sitecompass-form-label">
-					<?php esc_html_e( 'Phone:', 'sitecompass-ai' ); ?>
+					<?php esc_html_e( 'Phone:', 'sitecompass' ); ?>
 				</label>
 				<input type="text" id="sitecompass-user-phone" name="phone" class="sitecompass-form-input">
 				
 				<button id="sitecompass-submit-user-data" type="button" class="sitecompass-form-button">
-					<?php esc_html_e( 'Submit', 'sitecompass-ai' ); ?>
+					<?php esc_html_e( 'Submit', 'sitecompass' ); ?>
 				</button>
 			</form>
 		</div>
@@ -287,12 +287,12 @@ class Sitecompass_Ai_Chatbox {
 				<textarea id="sitecompass-user-message" placeholder="<?php echo esc_attr( $bot_prompt ); ?>"></textarea>
 				<div class="sitecompass-message-button">
 					<button class="sitecompass-send-button" id="sitecompass-send-msg">
-						<?php esc_html_e( 'Enter', 'sitecompass-ai' ); ?>
+						<?php esc_html_e( 'Enter', 'sitecompass' ); ?>
 					</button>
 				</div>
 			</div>
 			<div class="sitecompass-footer-info-text">
-				<?php esc_html_e( 'Powered by SiteCompass', 'sitecompass-ai' ); ?>
+				<?php esc_html_e( 'Powered by SiteCompass', 'sitecompass' ); ?>
 			</div>
 		</div>
 		<?php
@@ -371,7 +371,7 @@ class Sitecompass_Ai_Chatbox {
 	 */
 	private function get_avatar_greeting() {
 		$greeting = get_option( 'sitecompass_avatar_greeting', '' );
-		return ! empty( $greeting ) ? $greeting : __( 'Hi there! 👋', 'sitecompass-ai' );
+		return ! empty( $greeting ) ? $greeting : __( 'Hi there! 👋', 'sitecompass' );
 	}
 
 	/**
@@ -399,7 +399,7 @@ class Sitecompass_Ai_Chatbox {
 	 */
 	private function get_bot_prompt() {
 		$prompt = get_option( 'sitecompass_bot_prompt', '' );
-		return ! empty( $prompt ) ? $prompt : __( 'Enter your question...', 'sitecompass-ai' );
+		return ! empty( $prompt ) ? $prompt : __( 'Enter your question...', 'sitecompass' );
 	}
 
 	/**
@@ -418,7 +418,7 @@ class Sitecompass_Ai_Chatbox {
 	 */
 	private function get_bot_name() {
 		$name = get_option( 'sitecompass_bot_name', '' );
-		return ! empty( $name ) ? $name : __( 'SiteCompass', 'sitecompass-ai' );
+		return ! empty( $name ) ? $name : __( 'SiteCompass', 'sitecompass' );
 	}
 
 	/**

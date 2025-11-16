@@ -36,7 +36,7 @@ class Sitecompass_Ai_Plugin {
 	 */
 	public function __construct() {
 		$this->version     = SITECOMPASS_AI_VERSION;
-		$this->plugin_name = 'sitecompass-ai';
+		$this->plugin_name = 'sitecompass';
 
 		$this->load_dependencies();
 		$this->set_locale();

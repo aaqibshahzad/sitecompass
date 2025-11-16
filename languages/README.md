@@ -4,18 +4,18 @@ This directory contains translation files for the SiteCompass plugin.
 
 ## Files
 
-- **sitecompass-ai.pot** - The Portable Object Template file containing all translatable strings from the plugin. This file serves as the base for creating translations in other languages.
+- **sitecompass.pot** - The Portable Object Template file containing all translatable strings from the plugin. This file serves as the base for creating translations in other languages.
 
 ## Text Domain
 
-The plugin uses the text domain: `sitecompass-ai`
+The plugin uses the text domain: `sitecompass`
 
 ## Creating Translations
 
 To create a translation for your language:
 
-1. Copy the `sitecompass-ai.pot` file
-2. Rename it to `sitecompass-ai-{locale}.po` (e.g., `sitecompass-ai-es_ES.po` for Spanish)
+1. Copy the `sitecompass.pot` file
+2. Rename it to `sitecompass-{locale}.po` (e.g., `sitecompass-es_ES.po` for Spanish)
 3. Use a translation tool like [Poedit](https://poedit.net/) to translate the strings
 4. Save the file - this will also generate a `.mo` file which WordPress uses
 
@@ -51,11 +51,11 @@ The plugin uses WordPress standard translation functions:
 When new translatable strings are added to the plugin, the POT file should be regenerated using WordPress i18n tools:
 
 ```bash
-wp i18n make-pot . languages/sitecompass-ai.pot
+wp i18n make-pot . languages/sitecompass.pot
 ```
 
 Or using the WP-CLI command:
 
 ```bash
-wp i18n make-pot /path/to/sitecompass languages/sitecompass-ai.pot --domain=sitecompass-ai
+wp i18n make-pot /path/to/sitecompass languages/sitecompass.pot --domain=sitecompass
 ```

@@ -8,7 +8,7 @@ This document summarizes the internationalization (i18n) implementation for the 
 ### Implementation Details
 
 #### 1. Text Domain Configuration
-- **Text Domain**: `sitecompass-ai`
+- **Text Domain**: `sitecompass`
 - **Domain Path**: `/languages`
 - **Loading Method**: Automatic loading via `load_plugin_textdomain()` in `includes/class-plugin.php`
 
@@ -54,7 +54,7 @@ The plugin uses WordPress standard translation functions throughout:
 #### 4. POT File Generation
 
 A comprehensive POT (Portable Object Template) file has been created at:
-- `languages/sitecompass-ai.pot`
+- `languages/sitecompass.pot`
 
 This file contains all translatable strings from the plugin and serves as the base template for creating translations in other languages.
 
@@ -71,7 +71,7 @@ This file contains all translatable strings from the plugin and serves as the ba
 
 ```
 sitecompass/languages/
-├── sitecompass-ai.pot          # POT template file
+├── sitecompass.pot          # POT template file
 ├── README.md                    # Documentation for translators
 └── INTERNATIONALIZATION-SUMMARY.md  # This file
 ```
@@ -79,7 +79,7 @@ sitecompass/languages/
 #### 6. Verification Results
 
 ✅ All user-facing strings are wrapped with appropriate i18n functions
-✅ Text domain 'sitecompass-ai' is used consistently throughout
+✅ Text domain 'sitecompass' is used consistently throughout
 ✅ Text domain is properly loaded via `load_plugin_textdomain()`
 ✅ POT file generated with all translatable strings
 ✅ No PHP syntax errors or warnings
@@ -97,7 +97,7 @@ The plugin is now ready for translation with:
 #### 8. Next Steps for Translators
 
 To create a translation:
-1. Copy `sitecompass-ai.pot` to `sitecompass-ai-{locale}.po`
+1. Copy `sitecompass.pot` to `sitecompass-{locale}.po`
 2. Use Poedit or similar tool to translate strings
 3. Save to generate `.mo` file
 4. Place both `.po` and `.mo` files in the `languages/` directory
@@ -107,7 +107,7 @@ To create a translation:
 
 This implementation satisfies Requirement 2.2:
 - ✅ All user-facing strings wrapped in `__()` or `esc_html__()`
-- ✅ Proper text domain 'sitecompass-ai' used throughout
+- ✅ Proper text domain 'sitecompass' used throughout
 - ✅ Languages directory created and populated
 
 ### Testing Recommendations
@@ -123,7 +123,7 @@ To test translations:
 
 When adding new features:
 1. Always wrap user-facing strings with appropriate i18n functions
-2. Use the 'sitecompass-ai' text domain consistently
+2. Use the 'sitecompass' text domain consistently
 3. Regenerate the POT file after adding new strings
 4. Update existing translations as needed
 

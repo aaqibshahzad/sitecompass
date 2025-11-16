@@ -60,7 +60,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'sitecompass_chat_nonce' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Security verification failed.', 'sitecompass-ai' ),
+					'message' => __( 'Security verification failed.', 'sitecompass' ),
 				),
 				403
 			);
@@ -70,7 +70,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( ! isset( $_POST['message'] ) || empty( $_POST['message'] ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Message cannot be empty.', 'sitecompass-ai' ),
+					'message' => __( 'Message cannot be empty.', 'sitecompass' ),
 				),
 				400
 			);
@@ -83,7 +83,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( empty( $session_id ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Invalid session.', 'sitecompass-ai' ),
+					'message' => __( 'Invalid session.', 'sitecompass' ),
 				),
 				400
 			);
@@ -94,7 +94,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( empty( $api_key ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'OpenAI API key not configured.', 'sitecompass-ai' ),
+					'message' => __( 'OpenAI API key not configured.', 'sitecompass' ),
 				),
 				500
 			);
@@ -104,7 +104,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( empty( $assistant_id ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Assistant not configured.', 'sitecompass-ai' ),
+					'message' => __( 'Assistant not configured.', 'sitecompass' ),
 				),
 				500
 			);
@@ -120,7 +120,7 @@ class Sitecompass_Ai_Message_Handler {
 			if ( isset( $thread_response['error'] ) ) {
 				wp_send_json_error(
 					array(
-						'message' => __( 'Failed to create conversation thread.', 'sitecompass-ai' ),
+						'message' => __( 'Failed to create conversation thread.', 'sitecompass' ),
 					),
 					500
 				);
@@ -142,7 +142,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( isset( $message_response['error'] ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Failed to send message to assistant.', 'sitecompass-ai' ),
+					'message' => __( 'Failed to send message to assistant.', 'sitecompass' ),
 				),
 				500
 			);
@@ -157,7 +157,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( isset( $run_response['error'] ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Failed to run assistant.', 'sitecompass-ai' ),
+					'message' => __( 'Failed to run assistant.', 'sitecompass' ),
 				),
 				500
 			);
@@ -177,7 +177,7 @@ class Sitecompass_Ai_Message_Handler {
 			if ( isset( $run_status_response['error'] ) ) {
 				wp_send_json_error(
 					array(
-						'message' => __( 'Failed to retrieve run status.', 'sitecompass-ai' ),
+						'message' => __( 'Failed to retrieve run status.', 'sitecompass' ),
 					),
 					500
 				);
@@ -190,7 +190,7 @@ class Sitecompass_Ai_Message_Handler {
 			} elseif ( in_array( $run_status, array( 'failed', 'cancelled', 'expired' ), true ) ) {
 				wp_send_json_error(
 					array(
-						'message' => __( 'Assistant run failed.', 'sitecompass-ai' ),
+						'message' => __( 'Assistant run failed.', 'sitecompass' ),
 					),
 					500
 				);
@@ -202,7 +202,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( 'completed' !== $run_status ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Assistant response timeout.', 'sitecompass-ai' ),
+					'message' => __( 'Assistant response timeout.', 'sitecompass' ),
 				),
 				500
 			);
@@ -213,7 +213,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( isset( $messages_response['error'] ) || ! isset( $messages_response['data'][0] ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Failed to retrieve assistant response.', 'sitecompass-ai' ),
+					'message' => __( 'Failed to retrieve assistant response.', 'sitecompass' ),
 				),
 				500
 			);
@@ -249,7 +249,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'sitecompass_chat_nonce' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Security verification failed.', 'sitecompass-ai' ),
+					'message' => __( 'Security verification failed.', 'sitecompass' ),
 				),
 				403
 			);
@@ -275,7 +275,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'sitecompass_chat_nonce' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Security verification failed.', 'sitecompass-ai' ),
+					'message' => __( 'Security verification failed.', 'sitecompass' ),
 				),
 				403
 			);
@@ -290,7 +290,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( empty( $user_name ) && empty( $email ) && empty( $phone ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Please provide at least one piece of information.', 'sitecompass-ai' ),
+					'message' => __( 'Please provide at least one piece of information.', 'sitecompass' ),
 				),
 				400
 			);
@@ -300,7 +300,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( ! empty( $email ) && ! is_email( $email ) ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Please provide a valid email address.', 'sitecompass-ai' ),
+					'message' => __( 'Please provide a valid email address.', 'sitecompass' ),
 				),
 				400
 			);
@@ -330,7 +330,7 @@ class Sitecompass_Ai_Message_Handler {
 		if ( false === $result ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Failed to save user information.', 'sitecompass-ai' ),
+					'message' => __( 'Failed to save user information.', 'sitecompass' ),
 				),
 				500
 			);
@@ -343,7 +343,7 @@ class Sitecompass_Ai_Message_Handler {
 
 		wp_send_json_success(
 			array(
-				'message' => __( 'User information saved successfully.', 'sitecompass-ai' ),
+				'message' => __( 'User information saved successfully.', 'sitecompass' ),
 				'user_id' => $user_id,
 			)
 		);

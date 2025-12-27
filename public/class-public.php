@@ -71,6 +71,7 @@ class Sitecompass_Ai_Public {
 			'sitecompassAjax',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonce'    => wp_create_nonce( 'sitecompass_send_message' )
 			)
 		);
 

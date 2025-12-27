@@ -39,14 +39,11 @@ class Sitecompass_Ai_Message_Handler {
 	 */
 	public function register_hooks() {
 		// Register AJAX actions for both logged-in and non-logged-in users.
-		add_action( 'wp_ajax_sitecompass_send_message', array( $this, 'handle_send_message' ) );
-		add_action( 'wp_ajax_nopriv_sitecompass_send_message', array( $this, 'handle_send_message' ) );
+		add_action( 'wp_ajax_sitecompass_send_message', [ $this, 'handle_send_message' ] );
+		add_action( 'wp_ajax_nopriv_sitecompass_send_message', [ $this, 'handle_send_message' ] );
 
 		add_action( 'wp_ajax_sitecompass_create_session', array( $this, 'handle_create_session' ) );
 		add_action( 'wp_ajax_nopriv_sitecompass_create_session', array( $this, 'handle_create_session' ) );
-
-		add_action( 'wp_ajax_sitecompass_submit_user_info', array( $this, 'handle_submit_user_info' ) );
-		add_action( 'wp_ajax_nopriv_sitecompass_submit_user_info', array( $this, 'handle_submit_user_info' ) );
 	}
 
 	/**
@@ -57,7 +54,7 @@ class Sitecompass_Ai_Message_Handler {
 	 */
 	public function handle_send_message() {
 		// Verify nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'sitecompass_chat_nonce' ) ) {
+		if ( ! isset( $_POST['nonce'] ) && ! wp_verify_nonce( $_POST['nonce'], 'sitecompass_send_message' ) ) {
 			wp_send_json_error(
 				array(
 					'message' => __( 'Security verification failed.', 'sitecompass' ),
@@ -67,7 +64,7 @@ class Sitecompass_Ai_Message_Handler {
 		}
 
 		// Get and validate message.
-		if ( ! isset( $_POST['message'] ) || empty( $_POST['message'] ) ) {
+		if ( ! isset( $_POST['userMessage'] ) || empty( $_POST['userMessage'] ) ) {
 			wp_send_json_error(
 				array(
 					'message' => __( 'Message cannot be empty.', 'sitecompass' ),
@@ -76,7 +73,7 @@ class Sitecompass_Ai_Message_Handler {
 			);
 		}
 
-		$user_message = sanitize_textarea_field( wp_unslash( $_POST['message'] ) );
+		$user_message = sanitize_textarea_field( wp_unslash( $_POST['userMessage'] ) );
 
 		// Get session ID.
 		$session_id = $this->session->get_session_id();
@@ -261,90 +258,6 @@ class Sitecompass_Ai_Message_Handler {
 		wp_send_json_success(
 			array(
 				'session_id' => $session_id,
-			)
-		);
-	}
-
-	/**
-	 * Handle submit user info AJAX request.
-	 *
-	 * Saves user information to the database and sets user session cookie.
-	 */
-	public function handle_submit_user_info() {
-		// Verify nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'sitecompass_chat_nonce' ) ) {
-			wp_send_json_error(
-				array(
-					'message' => __( 'Security verification failed.', 'sitecompass' ),
-				),
-				403
-			);
-		}
-
-		// Sanitize and validate user input.
-		$user_name = isset( $_POST['user_name'] ) ? sanitize_text_field( wp_unslash( $_POST['user_name'] ) ) : '';
-		$email     = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
-		$phone     = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
-
-		// Validate that at least one field is provided.
-		if ( empty( $user_name ) && empty( $email ) && empty( $phone ) ) {
-			wp_send_json_error(
-				array(
-					'message' => __( 'Please provide at least one piece of information.', 'sitecompass' ),
-				),
-				400
-			);
-		}
-
-		// Validate email if provided.
-		if ( ! empty( $email ) && ! is_email( $email ) ) {
-			wp_send_json_error(
-				array(
-					'message' => __( 'Please provide a valid email address.', 'sitecompass' ),
-				),
-				400
-			);
-		}
-
-		// Save user info to database.
-		global $wpdb;
-		$table_name = $wpdb->prefix . 'sitecompass_users';
-
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-		$result = $wpdb->insert(
-			$table_name,
-			array(
-				'user_name'  => $user_name,
-				'email'      => $email,
-				'phone'      => $phone,
-				'created_at' => current_time( 'mysql' ),
-			),
-			array(
-				'%s',
-				'%s',
-				'%s',
-				'%s',
-			)
-		);
-
-		if ( false === $result ) {
-			wp_send_json_error(
-				array(
-					'message' => __( 'Failed to save user information.', 'sitecompass' ),
-				),
-				500
-			);
-		}
-
-		$user_id = $wpdb->insert_id;
-
-		// Set user session cookie.
-		$this->session->set_user_info_submitted( $user_id );
-
-		wp_send_json_success(
-			array(
-				'message' => __( 'User information saved successfully.', 'sitecompass' ),
-				'user_id' => $user_id,
 			)
 		);
 	}

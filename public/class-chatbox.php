@@ -113,7 +113,6 @@ class Sitecompass_Ai_Chatbox {
 		$initial_greeting   = $this->get_initial_greeting();
 		$subsequent_greeting = $this->get_subsequent_greeting();
 		$bot_prompt         = $this->get_bot_prompt();
-		$show_user_form     = $this->should_show_user_form();
 		$bot_name           = $this->get_bot_name();
 
 		// Get session data.
@@ -122,16 +121,6 @@ class Sitecompass_Ai_Chatbox {
 
 		// Load existing conversation.
 		$conversation_html = $this->load_conversation_history( $session_id );
-
-		// Determine visibility classes.
-		$chatbox_class = '';
-		$user_form_class = '';
-
-		if ( 'no' === $show_user_form || $user_info_submitted ) {
-			$user_form_class = 'sitecompass-d-none';
-		} else {
-			$chatbox_class = 'sitecompass-d-none';
-		}
 
 		// Generate dynamic CSS.
 		$dynamic_css = $this->generate_dynamic_css();
@@ -150,8 +139,7 @@ class Sitecompass_Ai_Chatbox {
 		// Render chat interface.
 		$this->render_chat_interface(
 			$bot_name,
-			$user_form_class,
-			$chatbox_class,
+			$avatar_greeting,
 			$subsequent_greeting,
 			$conversation_html,
 			$bot_prompt
@@ -169,10 +157,10 @@ class Sitecompass_Ai_Chatbox {
 	private function render_chat_button( $avatar, $initial_greeting ) {
 		$avatar_url = $this->get_avatar_url( $avatar );
 		?>
-		<button class="sitecompass-chat-button" id="sitecompass-open-chat">
+		<button id="sitecompass-open-chat">
 			<img src="<?php echo esc_url( $avatar_url ); ?>" alt="<?php esc_attr_e( 'Chat Avatar', 'sitecompass' ); ?>">
 			<?php if ( ! empty( $initial_greeting ) ) : ?>
-				<div class="sitecompass-initial-greeting">
+				<div id="sitecompass-initial-greeting">
 					<?php echo esc_html( $initial_greeting ); ?>
 				</div>
 			<?php endif; ?>
@@ -184,19 +172,22 @@ class Sitecompass_Ai_Chatbox {
 	 * Render the chat interface.
 	 *
 	 * @param string $bot_name            Bot display name.
-	 * @param string $user_form_class     CSS class for user form visibility.
-	 * @param string $chatbox_class       CSS class for chatbox visibility.
 	 * @param string $subsequent_greeting Subsequent greeting message.
 	 * @param string $conversation_html   Existing conversation HTML.
 	 * @param string $bot_prompt          Message input placeholder.
 	 */
-	private function render_chat_interface( $bot_name, $user_form_class, $chatbox_class, $subsequent_greeting, $conversation_html, $bot_prompt ) {
+	private function render_chat_interface( 
+			$bot_name, 
+			$avatar_greeting, 
+			$subsequent_greeting, 
+			$conversation_html, 
+			$bot_prompt 
+			) {
 		?>
-		<div class="sitecompass-chat-box" id="sitecompass-chat-box">
+		<div id="sitecompass-chat-popup">
 			<?php $this->render_chat_header( $bot_name ); ?>
-			<?php $this->render_user_form( $user_form_class ); ?>
-			<?php $this->render_chat_body( $chatbox_class, $subsequent_greeting, $conversation_html ); ?>
-			<?php $this->render_chat_footer( $chatbox_class, $bot_prompt ); ?>
+			<?php $this->render_chat_body( $avatar_greeting, $subsequent_greeting, $conversation_html ); ?>
+			<?php $this->render_chat_footer( $bot_prompt ); ?>
 		</div>
 		<?php
 	}
@@ -212,42 +203,7 @@ class Sitecompass_Ai_Chatbox {
 			<div class="sitecompass-header-title">
 				<?php echo esc_html( $bot_name ); ?>
 			</div>
-			<span class="sitecompass-close-chat" id="sitecompass-close-chat">-</span>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Render the user information form.
-	 *
-	 * @param string $user_form_class CSS class for visibility.
-	 */
-	private function render_user_form( $user_form_class ) {
-		?>
-		<div id="sitecompass-user-form" class="sitecompass-form-container <?php echo esc_attr( $user_form_class ); ?>">
-			<form class="sitecompass-user-info-form">
-				<div id="sitecompass-form-error-message"></div>
-				<div id="sitecompass-form-success-message"></div>
-				
-				<label for="sitecompass-user-name" class="sitecompass-form-label">
-					<?php esc_html_e( 'Name:', 'sitecompass' ); ?>
-				</label>
-				<input type="text" id="sitecompass-user-name" name="name" class="sitecompass-form-input" required>
-				
-				<label for="sitecompass-user-email" class="sitecompass-form-label">
-					<?php esc_html_e( 'Email:', 'sitecompass' ); ?>
-				</label>
-				<input type="email" id="sitecompass-user-email" name="email" class="sitecompass-form-input" required>
-				
-				<label for="sitecompass-user-phone" class="sitecompass-form-label">
-					<?php esc_html_e( 'Phone:', 'sitecompass' ); ?>
-				</label>
-				<input type="text" id="sitecompass-user-phone" name="phone" class="sitecompass-form-input">
-				
-				<button id="sitecompass-submit-user-data" type="button" class="sitecompass-form-button">
-					<?php esc_html_e( 'Submit', 'sitecompass' ); ?>
-				</button>
-			</form>
+			<span id="sitecompass-close-chat">&times;</span>
 		</div>
 		<?php
 	}
@@ -255,14 +211,13 @@ class Sitecompass_Ai_Chatbox {
 	/**
 	 * Render the chat body with messages.
 	 *
-	 * @param string $chatbox_class       CSS class for visibility.
 	 * @param string $subsequent_greeting Subsequent greeting message.
 	 * @param string $conversation_html   Existing conversation HTML.
 	 */
-	private function render_chat_body( $chatbox_class, $subsequent_greeting, $conversation_html ) {
+	private function render_chat_body($subsequent_greeting, $conversation_html ) {
 		?>
-		<div id="sitecompass-chatbox" class="<?php echo esc_attr( $chatbox_class ); ?>">
-			<div class="sitecompass-chat-body" id="sitecompass-chat-body">
+		<div id="sitecompass-chat-box">
+			<div id="sitecompass-chat-body">
 				<?php if ( ! empty( $subsequent_greeting ) ) : ?>
 					<div class="sitecompass-bot-message sitecompass-greeting-message">
 						<span><?php echo esc_html( $subsequent_greeting ); ?></span>
@@ -277,12 +232,11 @@ class Sitecompass_Ai_Chatbox {
 	/**
 	 * Render the chat footer with input area.
 	 *
-	 * @param string $chatbox_class CSS class for visibility.
 	 * @param string $bot_prompt    Message input placeholder.
 	 */
-	private function render_chat_footer( $chatbox_class, $bot_prompt ) {
+	private function render_chat_footer($bot_prompt ) {
 		?>
-		<div id="sitecompass-chat-footer" class="sitecompass-chat-footer <?php echo esc_attr( $chatbox_class ); ?>">
+		<div id="sitecompass-chat-footer" class="sitecompass-chat-footer">
 			<div class="sitecompass-chat-footer-textarea">
 				<textarea id="sitecompass-user-message" placeholder="<?php echo esc_attr( $bot_prompt ); ?>"></textarea>
 				<div class="sitecompass-message-button">
@@ -403,15 +357,6 @@ class Sitecompass_Ai_Chatbox {
 	}
 
 	/**
-	 * Check if user form should be shown.
-	 *
-	 * @return string 'yes' or 'no'.
-	 */
-	private function should_show_user_form() {
-		return get_option( 'sitecompass_show_user_form', 'no' );
-	}
-
-	/**
 	 * Get bot name.
 	 *
 	 * @return string Bot name.
@@ -453,21 +398,21 @@ class Sitecompass_Ai_Chatbox {
 		// Build CSS.
 		$css = "
 		/* SiteCompass Dynamic Styles */
-		.sitecompass-chat-button {
+		#sitecompass-open-chat {
 			background-color: {$button_bg_color} !important;
 		}
-		.sitecompass-chat-box {
+		#sitecompass-chat-box {
 			background-color: {$chatbot_bg_color} !important;
 			width: {$chatbox_width} !important;
 		}
-		.sitecompass-chat-header {
+		#sitecompass-chat-header {
 			background-color: {$header_bg_color} !important;
 			color: {$header_text_color} !important;
 		}
-		.sitecompass-header-title {
+		#sitecompass-header-title {
 			color: {$header_text_color} !important;
 		}
-		.sitecompass-chat-body {
+		#sitecompass-chat-body {
 			color: {$text_color} !important;
 		}
 		.sitecompass-user-message {
@@ -476,7 +421,7 @@ class Sitecompass_Ai_Chatbox {
 		.sitecompass-bot-message {
 			background-color: {$bot_text_bg_color} !important;
 		}
-		.sitecompass-initial-greeting {
+		#sitecompass-initial-greeting {
 			color: {$greeting_text_color} !important;
 		}
 		.sitecompass-greeting-message {

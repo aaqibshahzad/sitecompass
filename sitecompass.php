@@ -11,6 +11,7 @@
  * Text Domain: sitecompass
  * Domain Path: /languages
  */
+// error_log('Initial Greeting' . print_r($initial_greeting, true));
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

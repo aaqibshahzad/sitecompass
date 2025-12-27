@@ -62,6 +62,16 @@ class Sitecompass_Ai_Settings {
 
 		register_setting(
 			'sitecompass_general_settings',
+			'sitecompass_assistant_id',
+			array(
+				'type'              => 'string',
+				'sanitize_callback' => 'sanitize_text_field',
+				'default'           => '',
+			)
+		);
+
+		register_setting(
+			'sitecompass_general_settings',
 			'sitecompass_bot_name',
 			array(
 				'type'              => 'string',
@@ -107,16 +117,6 @@ class Sitecompass_Ai_Settings {
 				'type'              => 'string',
 				'sanitize_callback' => 'sanitize_textarea_field',
 				'default'           => 'Welcome back! How can I assist you?',
-			)
-		);
-
-		register_setting(
-			'sitecompass_general_settings',
-			'sitecompass_show_user_form',
-			array(
-				'type'              => 'string',
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => 'no',
 			)
 		);
 
@@ -276,6 +276,15 @@ class Sitecompass_Ai_Settings {
 					</tr>
 					<tr valign="top">
 						<th scope="row">
+							<label for="sitecompass_assistant_id"><?php esc_html_e( 'OpenAI Assistant ID', 'sitecompass' ); ?></label>
+						</th>
+						<td>
+							<input type="text" id="sitecompass_assistant_id" name="sitecompass_assistant_id" class="regular-text" value="<?php echo esc_attr( get_option( 'sitecompass_assistant_id', '' ) ); ?>" />
+							<p class="description"><?php esc_html_e( 'Enter your OpenAI Assistant ID.', 'sitecompass' ); ?></p>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row">
 							<label for="sitecompass_bot_name"><?php esc_html_e( 'Bot Name', 'sitecompass' ); ?></label>
 						</th>
 						<td>
@@ -317,19 +326,6 @@ class Sitecompass_Ai_Settings {
 						<td>
 							<textarea id="sitecompass_subsequent_greeting" name="sitecompass_subsequent_greeting" rows="2" cols="50" class="large-text"><?php echo esc_textarea( get_option( 'sitecompass_subsequent_greeting', 'Welcome back! How can I assist you?' ) ); ?></textarea>
 							<p class="description"><?php esc_html_e( 'Greeting message for returning visitors.', 'sitecompass' ); ?></p>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row">
-							<label for="sitecompass_show_user_form"><?php esc_html_e( 'Show User Form', 'sitecompass' ); ?></label>
-						</th>
-						<td>
-							<?php $show_user_form = esc_attr( get_option( 'sitecompass_show_user_form', 'no' ) ); ?>
-							<select id="sitecompass_show_user_form" name="sitecompass_show_user_form">
-								<option value="yes" <?php selected( $show_user_form, 'yes' ); ?>><?php esc_html_e( 'Yes', 'sitecompass' ); ?></option>
-								<option value="no" <?php selected( $show_user_form, 'no' ); ?>><?php esc_html_e( 'No', 'sitecompass' ); ?></option>
-							</select>
-							<p class="description"><?php esc_html_e( 'Display a form to collect user information before chat.', 'sitecompass' ); ?></p>
 						</td>
 					</tr>
 				</table>

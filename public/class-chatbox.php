@@ -130,7 +130,7 @@ class Sitecompass_Ai_Chatbox {
 
 		// Output dynamic CSS.
 		if ( ! empty( $dynamic_css ) ) {
-			echo '<style>' . wp_strip_all_tags( $dynamic_css ) . '</style>';
+			echo '<style>' . wp_kses( $dynamic_css, array() ) . '</style>';
 		}
 
 		// Render chat button.
@@ -186,7 +186,7 @@ class Sitecompass_Ai_Chatbox {
 		?>
 		<div id="sitecompass-chat-popup">
 			<?php $this->render_chat_header( $bot_name ); ?>
-			<?php $this->render_chat_body( $avatar_greeting, $subsequent_greeting, $conversation_html ); ?>
+			<?php $this->render_chat_body( $subsequent_greeting, $conversation_html ); ?>
 			<?php $this->render_chat_footer( $bot_prompt ); ?>
 		</div>
 		<?php
@@ -267,8 +267,7 @@ class Sitecompass_Ai_Chatbox {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$conversations = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM %i WHERE session_id = %s ORDER BY created_at ASC",
-				$conversation_table,
+				"SELECT * FROM `" . esc_sql( $conversation_table ) . "` WHERE session_id = %s ORDER BY created_at ASC",
 				$session_id
 			)
 		);

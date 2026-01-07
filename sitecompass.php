@@ -1,17 +1,12 @@
 <?php
 /**
  * Plugin Name: Site Compass
- * Plugin URI: https://sitecompass.ai
  * Description: A WordPress plugin that seamlessly integrates OpenAI's advanced language models into your website, enabling interactive chatbots, virtual assistants, and automated content support. Upload custom PDF documents to create a knowledge base, and let the AI assistant answer visitor questions based on your content.
  * Version: 1.0.0
- * Author: Site Compass Team
- * Author URI: https://sitecompass.ai 
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: sitecompass
- * Domain Path: /languages
  */
-// error_log('Initial Greeting' . print_r($initial_greeting, true));
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

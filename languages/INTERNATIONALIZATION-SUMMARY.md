@@ -9,8 +9,7 @@ This document summarizes the internationalization (i18n) implementation for the 
 
 #### 1. Text Domain Configuration
 - **Text Domain**: `sitecompass`
-- **Domain Path**: `/languages`
-- **Loading Method**: Automatic loading via `load_plugin_textdomain()` in `includes/class-plugin.php`
+- **Loading Method**: Automatic loading by WordPress (since WP 4.6, no manual `load_plugin_textdomain()` needed for WordPress.org hosted plugins)
 
 #### 2. Files Reviewed and Verified
 
@@ -31,7 +30,7 @@ All PHP files in the plugin have been reviewed to ensure user-facing strings are
 - `public/class-public.php` - Public hooks (no user-facing strings)
 
 **Core Files:**
-- `includes/class-plugin.php` - Plugin initialization and text domain loading
+- `includes/class-plugin.php` - Plugin initialization
 - `includes/class-openai-assistant.php` - API wrapper (no user-facing strings)
 - `includes/class-database.php` - Database management (no user-facing strings)
 - `includes/class-activator.php` - Activation hooks (no user-facing strings)
@@ -80,7 +79,7 @@ sitecompass/languages/
 
 ✅ All user-facing strings are wrapped with appropriate i18n functions
 ✅ Text domain 'sitecompass' is used consistently throughout
-✅ Text domain is properly loaded via `load_plugin_textdomain()`
+✅ Text domain declared in plugin header (WordPress auto-loads translations since WP 4.6)
 ✅ POT file generated with all translatable strings
 ✅ No PHP syntax errors or warnings
 ✅ Follows WordPress coding standards for i18n
@@ -89,7 +88,7 @@ sitecompass/languages/
 
 The plugin is now ready for translation with:
 - Proper text domain declaration in plugin header
-- Automatic text domain loading on `plugins_loaded` hook
+- Automatic translation loading by WordPress (no manual loading required for WordPress.org hosted plugins)
 - All user-facing strings wrapped with translation functions
 - Comprehensive POT file for translators
 - Documentation for creating new translations

@@ -6,6 +6,8 @@
  * @subpackage Sitecompass_Ai/includes
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Register all actions and filters for the plugin.
  */

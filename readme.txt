@@ -2,7 +2,7 @@
 Contributors: sitecompassteam, ahsanzameer
 Tags: chatbot, ai, openai, gpt, assistant, chat, pdf, knowledge-base, customer-support, virtual-assistant
 Requires at least: 5.8
-Tested up to: 6.4
+Tested up to: 6.9
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later

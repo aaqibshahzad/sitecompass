@@ -6,6 +6,8 @@
  * @subpackage Sitecompass_Ai/admin
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * The PDF management functionality of the plugin.
  */
@@ -75,34 +77,53 @@ class Sitecompass_Ai_PDF_Manager {
 					continue;
 				}
 
-				$upload_dir = wp_upload_dir();
-				$file_name  = time() . '-' . sanitize_file_name( $uploaded_files['name'][ $key ] );
-				$upload_path = $upload_dir['path'] . '/' . $file_name;
-				$public_path = $upload_dir['url'] . '/' . $file_name;
+				// Prepare file array for wp_handle_upload.
+				$file = array(
+					'name'     => $uploaded_files['name'][ $key ],
+					'type'     => $uploaded_files['type'][ $key ],
+					'tmp_name' => $uploaded_files['tmp_name'][ $key ],
+					'error'    => $uploaded_files['error'][ $key ],
+					'size'     => $uploaded_files['size'][ $key ],
+				);
 
-				// Move uploaded file.
-				if ( move_uploaded_file( $uploaded_files['tmp_name'][ $key ], $upload_path ) ) {
-					// Upload to OpenAI.
-					$openai_response = $openai_assistant->upload_file( $upload_path );
+				// Set upload overrides.
+				$upload_overrides = array(
+					'test_form' => false,
+					'mimes'     => array( 'pdf' => 'application/pdf' ),
+				);
 
-					if ( isset( $openai_response['id'] ) && ! empty( $openai_response['id'] ) ) {
-						// Insert record into database.
-						// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
-						$wpdb->insert(
-							$table_name,
-							array(
-								'name'           => sanitize_text_field( $uploaded_files['name'][ $key ] ),
-								'path'           => esc_url_raw( $public_path ),
-								'openai_file_id' => sanitize_text_field( $openai_response['id'] ),
-								'created_at'     => current_time( 'mysql' ),
-							),
-							array( '%s', '%s', '%s', '%s' )
-						);
-					} else {
-						// Delete local file if OpenAI upload failed.
-						wp_delete_file( $upload_path );
-						return __( 'Failed to upload file to OpenAI.', 'sitecompass' );
-					}
+				// Handle the upload using WordPress function.
+				$move_file = wp_handle_upload( $file, $upload_overrides );
+
+				if ( isset( $move_file['error'] ) ) {
+					continue;
+				}
+
+				$upload_path = $move_file['file'];
+				$public_path = $move_file['url'];
+
+				// Upload to OpenAI.
+				$openai_response = $openai_assistant->upload_file( $upload_path );
+
+				if ( isset( $openai_response['id'] ) && ! empty( $openai_response['id'] ) ) {
+					// Insert record into database.
+					// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+					$wpdb->insert(
+						$table_name,
+						array(
+							'name'           => sanitize_text_field( $uploaded_files['name'][ $key ] ),
+							'path'           => esc_url_raw( $public_path ),
+							'openai_file_id' => sanitize_text_field( $openai_response['id'] ),
+							'created_at'     => current_time( 'mysql' ),
+						),
+						array( '%s', '%s', '%s', '%s' )
+					);
+				} else {
+					// Delete local file if OpenAI upload failed.
+					wp_delete_file( $upload_path );
+					$error_message = isset( $openai_response['error']['message'] ) ? $openai_response['error']['message'] : __( 'Unknown error occurred.', 'sitecompass' );
+					// translators: %s: Error message from OpenAI API.
+					return sprintf( __( 'Failed to upload file to OpenAI: %s', 'sitecompass' ), $error_message );
 				}
 			}
 		}
@@ -132,7 +153,7 @@ class Sitecompass_Ai_PDF_Manager {
 
 		// Get PDF file info.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$pdf_file = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM %i WHERE id = %d", $table_name, $pdf_id ), ARRAY_A );
+		$pdf_file = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE id = %d", $pdf_id ), ARRAY_A );
 
 		if ( ! $pdf_file ) {
 			return __( 'PDF file not found.', 'sitecompass' );
@@ -170,6 +191,6 @@ class Sitecompass_Ai_PDF_Manager {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'sitecompass_pdfs';
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %i ORDER BY created_at DESC", $table_name ), ARRAY_A );
+		return $wpdb->get_results( "SELECT * FROM `" . esc_sql( $table_name ) . "` ORDER BY created_at DESC", ARRAY_A );
 	}
 }

@@ -45,6 +45,7 @@ class Sitecompass_Ai_Chats {
 		}
 
 		// Check if viewing a single thread.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce verified in render_single_thread_view(), this is just a read operation.
 		if ( isset( $_GET['thread_id'] ) && ! empty( $_GET['thread_id'] ) ) {
 			$this->render_single_thread_view();
 			return;
@@ -106,7 +107,7 @@ class Sitecompass_Ai_Chats {
 		$where_sql = implode( ' AND ', $where_clauses );
 
 		// Get total count.
-		$count_query = $wpdb->prepare( "SELECT COUNT(DISTINCT session_id) FROM %i WHERE {$where_sql}", $table_name ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$count_query = "SELECT COUNT(DISTINCT session_id) FROM `" . esc_sql( $table_name ) . "` WHERE {$where_sql}"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		if ( ! empty( $query_params ) ) {
 			$count_query = $wpdb->prepare( $count_query, $query_params ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
@@ -121,12 +122,11 @@ class Sitecompass_Ai_Chats {
 				MIN(created_at) as first_message_time,
 				MAX(created_at) as last_message_time,
 				COUNT(*) as message_count
-			FROM %i
+			FROM `" . esc_sql( $table_name ) . "`
 			WHERE {$where_sql}
 			GROUP BY session_id, thread_id
 			ORDER BY last_message_time DESC
 			LIMIT %d OFFSET %d",
-			$table_name,
 			$per_page,
 			$offset
 		); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -260,8 +260,7 @@ class Sitecompass_Ai_Chats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$messages = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM %i WHERE thread_id = %s ORDER BY created_at ASC",
-				$table_name,
+				"SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE thread_id = %s ORDER BY created_at ASC",
 				$thread_id
 			)
 		);
@@ -347,7 +346,7 @@ class Sitecompass_Ai_Chats {
 
 		$where_sql = implode( ' AND ', $where_clauses );
 
-		$query = $wpdb->prepare( "SELECT * FROM %i WHERE {$where_sql} ORDER BY created_at ASC", $table_name ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$query = "SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE {$where_sql} ORDER BY created_at ASC"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		if ( ! empty( $query_params ) ) {
 			$query = $wpdb->prepare( $query, $query_params ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
@@ -362,6 +361,7 @@ class Sitecompass_Ai_Chats {
 		header( 'Expires: 0' );
 
 		// Create output stream.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Writing to php://output stream, WP_Filesystem not applicable.
 		$output = fopen( 'php://output', 'w' );
 
 		// Add CSV headers.
@@ -385,6 +385,7 @@ class Sitecompass_Ai_Chats {
 			);
 		}
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closing php://output stream.
 		fclose( $output );
 		exit;
 	}
@@ -406,8 +407,7 @@ class Sitecompass_Ai_Chats {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		$messages = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM %i WHERE thread_id = %s ORDER BY created_at ASC",
-				$table_name,
+				"SELECT * FROM `" . esc_sql( $table_name ) . "` WHERE thread_id = %s ORDER BY created_at ASC",
 				$thread_id
 			)
 		);
@@ -423,6 +423,7 @@ class Sitecompass_Ai_Chats {
 		header( 'Expires: 0' );
 
 		// Create output stream.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Writing to php://output stream, WP_Filesystem not applicable.
 		$output = fopen( 'php://output', 'w' );
 
 		// Add CSV headers.
@@ -446,6 +447,7 @@ class Sitecompass_Ai_Chats {
 			);
 		}
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closing php://output stream.
 		fclose( $output );
 		exit;
 	}

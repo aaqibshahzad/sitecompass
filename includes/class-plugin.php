@@ -6,6 +6,8 @@
  * @subpackage Sitecompass_Ai/includes
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * The core plugin class.
  */
@@ -39,7 +41,6 @@ class Sitecompass_Ai_Plugin {
 		$this->plugin_name = 'sitecompass';
 
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 	}
@@ -68,24 +69,6 @@ class Sitecompass_Ai_Plugin {
 		require_once SITECOMPASS_AI_PLUGIN_DIR . 'public/class-message-handler.php';
 
 		$this->loader = new Sitecompass_Ai_Loader();
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 */
-	private function set_locale() {
-		$this->loader->add_action( 'plugins_loaded', $this, 'load_plugin_textdomain' );
-	}
-
-	/**
-	 * Load the plugin text domain for translation.
-	 */
-	public function load_plugin_textdomain() {
-		load_plugin_textdomain(
-			'sitecompass',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		);
 	}
 
 	/**

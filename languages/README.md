@@ -34,7 +34,7 @@ If you'd like to contribute a translation, please:
 
 ## Loading Translations
 
-The plugin automatically loads translations from this directory using WordPress's standard translation system. The text domain is loaded in the `Sitecompass_Ai_Plugin` class via the `load_plugin_textdomain()` function.
+Since WordPress 4.6, translations are automatically loaded by WordPress for plugins hosted on WordPress.org. No manual `load_plugin_textdomain()` call is needed. WordPress handles translation loading automatically based on the Text Domain header in the main plugin file.
 
 ## Translation Functions Used
 

@@ -9,6 +9,8 @@
  * @subpackage Sitecompass_Ai/public
  */
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Message handler class.
  *
@@ -44,6 +46,22 @@ class Sitecompass_Ai_Message_Handler {
 
 		add_action( 'wp_ajax_sitecompass_create_session', array( $this, 'handle_create_session' ) );
 		add_action( 'wp_ajax_nopriv_sitecompass_create_session', array( $this, 'handle_create_session' ) );
+
+		add_action( 'wp_ajax_sitecompass_get_nonce', array( $this, 'handle_get_nonce' ) );
+		add_action( 'wp_ajax_nopriv_sitecompass_get_nonce', array( $this, 'handle_get_nonce' ) );
+	}
+
+	/**
+	 * Handle get nonce AJAX request.
+	 *
+	 * Purpose: Returns a fresh nonce to handle page caching and session changes.
+	 */
+	public function handle_get_nonce() {
+		wp_send_json_success(
+			array(
+				'nonce' => wp_create_nonce( 'sitecompass_send_message' ),
+			)
+		);
 	}
 
 	/**
@@ -54,7 +72,10 @@ class Sitecompass_Ai_Message_Handler {
 	 */
 	public function handle_send_message() {
 		// Verify nonce.
-		if ( ! isset( $_POST['nonce'] ) && ! wp_verify_nonce( $_POST['nonce'], 'sitecompass_send_message' ) ) {
+		$nonce_value  = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+		$nonce_result = wp_verify_nonce( $nonce_value, 'sitecompass_send_message' );
+
+		if ( empty( $nonce_value ) || false === $nonce_result ) {
 			wp_send_json_error(
 				array(
 					'message' => __( 'Security verification failed.', 'sitecompass' ),
@@ -163,7 +184,7 @@ class Sitecompass_Ai_Message_Handler {
 		$run_id = $run_response['id'];
 
 		// Poll for run completion.
-		$max_attempts = 30;
+		$max_attempts = 60;
 		$attempt      = 0;
 		$run_status   = '';
 
@@ -185,9 +206,12 @@ class Sitecompass_Ai_Message_Handler {
 			if ( 'completed' === $run_status ) {
 				break;
 			} elseif ( in_array( $run_status, array( 'failed', 'cancelled', 'expired' ), true ) ) {
+				$error_message = isset( $run_status_response['last_error']['message'] )
+					? $run_status_response['last_error']['message']
+					: __( 'Assistant run failed.', 'sitecompass' );
 				wp_send_json_error(
 					array(
-						'message' => __( 'Assistant run failed.', 'sitecompass' ),
+						'message' => $error_message,
 					),
 					500
 				);
@@ -243,7 +267,7 @@ class Sitecompass_Ai_Message_Handler {
 	 */
 	public function handle_create_session() {
 		// Verify nonce.
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'sitecompass_chat_nonce' ) ) {
+		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'sitecompass_send_message' ) ) {
 			wp_send_json_error(
 				array(
 					'message' => __( 'Security verification failed.', 'sitecompass' ),
@@ -308,7 +332,6 @@ class Sitecompass_Ai_Message_Handler {
 		);
 
 		if ( false === $result ) {
-			error_log( 'SiteCompass: Failed to save message to database' );
 			return false;
 		}
 

@@ -71,6 +71,22 @@
     });
 
     /**
+     * Get Fresh Nonce
+     *
+     * Purpose: Fetches a fresh nonce to handle page caching and session changes.
+     */
+    function getFreshNonce() {
+        return $.ajax({
+            url: sitecompassAjax.ajax_url,
+            dataType: 'json',
+            method: 'POST',
+            data: {
+                action: 'sitecompass_get_nonce'
+            }
+        });
+    }
+
+    /**
      * Send User Message
      */
     function sendUserMessage() {
@@ -92,27 +108,39 @@
             '</div>'
         );
 
-        $.ajax({
-            url: sitecompassAjax.ajax_url,
-            dataType: 'json',
-            method: 'POST',
-            data: {
-                action: 'sitecompass_send_message',
-                nonce: sitecompassAjax.nonce,
-                sessionId: getCookie('sitecompassSessionId'),
-                userMessage: message,
-                userType: 'User'
-            },
-            success: function (response) {
-                $('#sitecompass-chat-footer .sitecompass-bubble').remove();
+        // Get fresh nonce first, then send message.
+        getFreshNonce().done(function (nonceResponse) {
+            var freshNonce = nonceResponse.data.nonce;
 
-                if (response.error) {
-                    console.error(response.message);
-                    return;
+            $.ajax({
+                url: sitecompassAjax.ajax_url,
+                dataType: 'json',
+                method: 'POST',
+                data: {
+                    action: 'sitecompass_send_message',
+                    nonce: freshNonce,
+                    sessionId: getCookie('sitecompassSessionId'),
+                    userMessage: message,
+                    userType: 'User'
+                },
+                success: function (response) {
+                    $('#sitecompass-chat-footer .sitecompass-bubble').remove();
+
+                    if (response.error) {
+                        console.error(response.message);
+                        return;
+                    }
+
+                    appendMessage(response.data.message, 'sitecompass-bot-message');
+                },
+                error: function (xhr, status, error) {
+                    $('#sitecompass-chat-footer .sitecompass-bubble').remove();
+                    console.error('SiteCompass AJAX Error:', error);
                 }
-
-                appendMessage(response.data, 'sitecompass-bot-message');
-            }
+            });
+        }).fail(function () {
+            $('#sitecompass-chat-footer .sitecompass-bubble').remove();
+            console.error('SiteCompass: Failed to get fresh nonce');
         });
     }
 

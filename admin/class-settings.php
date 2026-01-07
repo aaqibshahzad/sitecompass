@@ -119,16 +119,6 @@ class Sitecompass_Ai_Settings {
 				'default'           => 'Welcome back! How can I assist you?',
 			)
 		);
-
-		register_setting(
-			'sitecompass_general_settings',
-			'sitecompass_assistant_id',
-			array(
-				'type'              => 'string',
-				'sanitize_callback' => 'sanitize_text_field',
-				'default'           => '',
-			)
-		);
 	}
 
 	/**
@@ -267,9 +257,10 @@ class Sitecompass_Ai_Settings {
 						<td>
 							<?php $selected_model = esc_attr( get_option( 'sitecompass_model', 'gpt-4o-mini' ) ); ?>
 							<select id="sitecompass_model" name="sitecompass_model">
-								<option value="gpt-4o" <?php selected( $selected_model, 'gpt-4o' ); ?>>GPT-4o</option>
-								<option value="gpt-4o-mini" <?php selected( $selected_model, 'gpt-4o-mini' ); ?>>GPT-4o Mini</option>
+								<option value="gpt-4o" <?php selected( $selected_model, 'gpt-4o' ); ?>>GPT-4o (Latest)</option>
+								<option value="gpt-4o-mini" <?php selected( $selected_model, 'gpt-4o-mini' ); ?>>GPT-4o Mini (Cost-Effective)</option>
 								<option value="gpt-4-turbo" <?php selected( $selected_model, 'gpt-4-turbo' ); ?>>GPT-4 Turbo</option>
+								<option value="o1-mini" <?php selected( $selected_model, 'o1-mini' ); ?>>O1 Mini (Reasoning)</option>
 							</select>
 							<p class="description"><?php esc_html_e( 'Select the OpenAI model to use for the chatbot.', 'sitecompass' ); ?></p>
 						</td>
